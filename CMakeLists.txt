@@ -11,6 +11,7 @@ if (NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE "Release" CACHE STRING "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel." FORCE)
 endif()
 
+option(STATIC_FACTER "Build a static libfacter library" OFF)
 option(YAMLCPP_STATIC "Use yaml-cpp's static libraries" OFF)
 
 set(FACTER_PATH "" CACHE PATH "Specify the location to look for specific binaries before trying PATH.")
@@ -129,6 +130,10 @@ include(cflags)
 set(FACTER_CXX_FLAGS "${LEATHERMAN_CXX_FLAGS}")
 
 add_definitions(${LEATHERMAN_DEFINITIONS})
+
+if (STATIC_FACTER)
+    set (LEATHERMAN_SHARED OFF)
+endif()
 
 #
 # Add cpplint and cppcheck targets
